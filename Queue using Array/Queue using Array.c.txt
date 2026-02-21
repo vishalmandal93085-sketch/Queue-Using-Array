@@ -1,0 +1,78 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX 5
+
+// Queue structure
+struct Queue {
+    int arr[MAX];
+    int front, rear;
+};
+
+// Function to initialize the queue
+void initQueue(struct Queue* queue) {
+    queue->front = -1;
+    queue->rear = -1;
+}
+
+// Function to check if the queue is full
+int isFull(struct Queue* queue) {
+    return queue->rear == MAX - 1;
+}
+
+// Function to check if the queue is empty
+int isEmpty(struct Queue* queue) {
+    return queue->front == -1 || queue->front > queue->rear;
+}
+
+// Function to enqueue an element into the queue
+void enqueue(struct Queue* queue, int value) {
+    if (isFull(queue)) {
+        printf("Queue is full!\n");
+    } else {
+        if (queue->front == -1) {
+            queue->front = 0;
+        }
+        queue->arr[++queue->rear] = value;
+        printf("%d enqueued to queue\n", value);
+    }
+}
+
+// Function to dequeue an element from the queue
+int dequeue(struct Queue* queue) {
+    if (isEmpty(queue)) {
+        printf("Queue is empty!\n");
+        return -1;
+    } else {
+        return queue->arr[queue->front++];
+    }
+}
+
+// Function to get the front element of the queue
+int frontElement(struct Queue* queue) {
+    if (isEmpty(queue)) {
+        printf("Queue is empty!\n");
+        return -1;
+    } else {
+        return queue->arr[queue->front];
+    }
+}
+
+int main() {
+    struct Queue queue;
+
+    initQueue(&queue);
+
+    enqueue(&queue, 10);
+    enqueue(&queue, 20);
+    enqueue(&queue, 30);
+
+    printf("Front element is %d\n", frontElement(&queue));
+
+    printf("%d dequeued from queue\n", dequeue(&queue));
+    printf("%d dequeued from queue\n", dequeue(&queue));
+
+    printf("Front element is %d\n", frontElement(&queue));
+
+    return 0;
+}
